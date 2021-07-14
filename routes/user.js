@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const testSchema = require('../models/test');
+//                       запрос   ответ
+router.post('/', async (request, response) => {
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+  const { pass } = request.body;
+  
+  const test = new testSchema({ pass: pass });
 
-router.get('/test', (req, res) => {
-  console.log('lalala', req.body);
-  res.json({ message: 'success' });
+  try {
+    await test.save();
+    console.log(1);
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(2);
+  response.json({ message: 'success' });
 });
 
 module.exports = router;
