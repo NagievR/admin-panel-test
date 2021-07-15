@@ -6,15 +6,16 @@ const logger = require('morgan');
 
 const startDB = require('./database/mongo-db');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/user');
-const adminRouter = require('./routes/admin');
+const adminPanelRouter = require('./admin-panel/index');
+const doctorsRouter = require('./routes/doctors.route');
+const testsRouter = require('./routes/tests.route');
+const adminsRouter = require('./routes/admins.route');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// // view engine setup
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,9 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
  
-app.use('/', indexRouter);
-app.use('/test', usersRouter);
-app.use('/admin', adminRouter);
+// admin panel
+app.use('/admin', adminPanelRouter);
+
+// routes
+app.use('/doctors', doctorsRouter);
+app.use('/tests', testsRouter);
+app.use('/admins', adminsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
