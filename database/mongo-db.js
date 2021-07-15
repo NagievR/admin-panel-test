@@ -11,7 +11,7 @@ const connectToDB = () => {
   const connection = mongoose.connection;
   
   connection.on('error', () => console.error('DB connection error'));
-  connection.on('open', () => console.log('successful connection to DB'));
+  connection.on('open', () => console.log('successful connected to DB'));
 }
 
 module.exports = connectToDB;
