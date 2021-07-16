@@ -17,17 +17,17 @@ const navContentAdmin = {
 
 
 
-const { BaseProvider } = require('@admin-bro/upload')
+// const { BaseProvider } = require('@admin-bro/upload')
 
-class MyProvider extends BaseProvider {
-  constructor() {
-     // it requires bucket as a parameter to properly pass it to other methods
-     super('public')
-  }
-  // your implementation goes here
-}
+// class MyProvider extends BaseProvider {
+//   constructor() {
+//      // it requires bucket as a parameter to properly pass it to other methods
+//      super('public')
+//   }
+//   // your implementation goes here
+// }
 
-const provider = new MyProvider()
+// const provider = new MyProvider()
 
 
 
@@ -44,8 +44,18 @@ const resources = [
         }
       }
     },
-
-    features: [uploadFeature({ provider })],
+// https://stackoverflow.com/questions/64557467/how-to-configure-bucket-in-admin-bro-for-local-storage-of-uploaded-files
+    features: [uploadFeature({
+      provider: { local: { bucket: path.join(__dirname, 'public', 'images') } },
+      properties: {
+        key: 'image.path',
+        bucket: 'image.folder',
+        mimeType: 'image.type',
+        size: 'image.size',
+        filename: 'image.filename',
+        file: 'uploadFile'
+      }
+    })],
 
 
     // features: [uploadFeature({
