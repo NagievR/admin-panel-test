@@ -3,6 +3,8 @@ const Doctor = require('../models/Doctor');
 const Admin = require('../models/Admin');
 const uploadFeature = require('@admin-bro/upload');
 
+// console.log(uploadFeature);
+
 const navContentTest = {
   name: 'Тест'
 };
@@ -16,16 +18,32 @@ const navContentAdmin = {
 const resources = [
   {
     resource: Doctor, 
-    options: { navigation: navContentDoctor },
-    features: [uploadFeature({
-      provider: { local: { bucket: 'public' } },
+    options: { 
+      navigation: navContentDoctor,
       properties: {
-        key: 'fileUrl', // to this db field feature will safe S3 key
-        mimeType: 'mimeType' // this property is important because allows to have previews
-      },
-    })]
+        '_id': {
+          isVisible: false,
+        }
+      }
+    },
+    // features: [uploadFeature({
+    //   multiple: true,
+    //   provider: { local: { bucket: '/public' } },
+    //   properties: {
+    //     key: 'img',
+    //     // file: 'img',
+    //     // filePath: '/public'
+    //   },
+    //   // validation: {
+    //   //   mimeTypes: ['image/png', 'image/jpg', 'image/jpeg']
+    //   // },
+    // })],
   },
   
+
+
+
+
   {
     resource: Test, 
     options: { navigation: navContentTest },

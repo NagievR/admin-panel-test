@@ -20,6 +20,10 @@ const doctorSchema = new Schema({
     required: true
   },
 
+  img: {
+    type: String,
+  }
+
 });
 
 module.exports = model('Doctor', doctorSchema);
