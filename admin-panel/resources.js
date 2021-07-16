@@ -2,8 +2,7 @@ const Test = require('../models/test');
 const Doctor = require('../models/Doctor');
 const Admin = require('../models/Admin');
 const uploadFeature = require('@admin-bro/upload');
-
-// console.log(uploadFeature);
+const path = require('path');
 
 const navContentTest = {
   name: 'Тест'
@@ -11,9 +10,28 @@ const navContentTest = {
 const navContentDoctor = {
   name: 'О нас'
 };
-const navContentAdmin = {
+const navContentAdmin = { 
   name: 'Администрация'
 };
+
+
+
+
+const { BaseProvider } = require('@admin-bro/upload')
+
+class MyProvider extends BaseProvider {
+  constructor() {
+     // it requires bucket as a parameter to properly pass it to other methods
+     super('public')
+  }
+  // your implementation goes here
+}
+
+const provider = new MyProvider()
+
+
+
+
 
 const resources = [
   {
@@ -26,6 +44,10 @@ const resources = [
         }
       }
     },
+
+    features: [uploadFeature({ provider })],
+
+
     // features: [uploadFeature({
     //   multiple: true,
     //   provider: { local: { bucket: '/public' } },
@@ -39,9 +61,6 @@ const resources = [
     //   // },
     // })],
   },
-  
-
-
 
 
   {

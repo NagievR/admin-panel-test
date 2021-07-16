@@ -14,7 +14,7 @@ const adminBro = new AdminBro({
   branding: branding,
 });
 
-console.log(adminBro);
+// console.log(adminBro);
  
 const router = AdminBroExpress.buildRouter(adminBro);
 module.exports = router;

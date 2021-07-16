@@ -1,6 +1,14 @@
 const { Schema, model } = require('mongoose');
 
-const doctorSchema = new Schema({
+const fileSchema = new Schema({
+  path: String,
+  type: String,
+  size: Number,
+  folder: String,
+  filename: String
+});
+
+module.exports = model('Doctor', {
   name: {
     type: String,
     required: true
@@ -20,10 +28,35 @@ const doctorSchema = new Schema({
     required: true
   },
 
-  img: {
-    type: String,
-  }
-
+  uploadedFile: fileSchema
 });
 
-module.exports = model('Doctor', doctorSchema);
+
+
+// const doctorSchema = new Schema({
+//   name: {
+//     type: String,
+//     required: true
+//   },
+
+//   age: {
+//     type: Number,
+//     required: true
+//   },
+
+//   experience: {
+//     type: Number
+//   },
+
+//   description: {
+//     type: String,
+//     required: true
+//   },
+
+//   img: {
+//     type: String,
+//   },
+
+// });
+
+// console.log({...doctorSchema})
