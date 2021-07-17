@@ -23,8 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
  
 
+// app.use('/public', express.static(path.join('public', 'images')));
+app.use(express.static(__dirname + '/public/images'));
 
-app.use('/public', express.static('public'));
 // admin panel
 app.use('/admin', adminPanelRouter);
 

@@ -32,6 +32,7 @@ class UploadProvider extends BaseProvider {
     }
 
     async upload(file, key, ActionContext) {
+      console.log('****************LOG****************')
         const fullPath = resolve(this.assetPath, key)
         const dirPath = dirname(fullPath)
 
@@ -40,7 +41,11 @@ class UploadProvider extends BaseProvider {
         }
         await promises.copyFile(file.path, fullPath)
         await promises.unlink(file.path)
+        console.log('FULL PATH: ', fullPath);
+        console.log('DIR PATH: ', dirPath);
+        console.log('****************/LOG****************')
         return key
+
     }
 
     async delete(key, bucket, context) {
@@ -57,13 +62,21 @@ class UploadProvider extends BaseProvider {
     }
 
     path(key, bucket, context) {
-        return "/" + bucket
+        // return "/" + bucket;
+
+      // console.log('KEY=== ', key, ' BUCK=== ', bucket)
+
+        return "/" + key;
+
+        // return 'https://img5.goodfon.ru/wallpaper/nbig/3/73/abstraktsiia-antisfera-vodovorot-krasok-kartinka-chernyi-fon.jpg'
+        // console.log('bucket+++++++++++++', bucket);
+        // return `/${bucket}/images/${key}`
+
+        // return 
     }
 }
 
-console.log('********************', path.join(__dirname, 'test'));
-
-const provider = new UploadProvider("test", path.join(__dirname, 'test'))
+const provider = new UploadProvider('images', path.join('public', 'images'))
 
 
 
@@ -78,6 +91,9 @@ const resources = [
       properties: {
         '_id': {
           isVisible: false,
+        },
+        'createdAt': {
+          isVisible: false
         }
       }
     },
@@ -93,44 +109,10 @@ const resources = [
           mimeType: 'uploadedFile.type',
           size: 'uploadedFile.size',
           filename: 'uploadedFile.filename',
-          file: 'uploadFile',
+          file: 'Фото',
         }
       })
     ]
-
-
-    // features: [uploadFeature({
-    //   provider: { local: { bucket: 'public' } }, //path.join(__dirname, 'test')
-    //   properties: {
-    //     // key: 'image.path',
-    //     // bucket: 'image.folder',
-    //     // mimeType: 'image.type',
-    //     // size: 'image.size',
-    //     // filename: 'image.filename',
-    //     // file: 'uploadFile'
-
-    //     key: 'uploadedFile.path',
-    //     // bucket: 'uploadedFile.folder',
-    //     // mimeType: 'uploadedFile.type',
-    //     // size: 'uploadedFile.size',
-    //     // filename: 'uploadedFile.filename',
-    //     // file: 'uploadFile',
-    //   }
-    // })],
-
-
-    // features: [uploadFeature({
-    //   multiple: true,
-    //   provider: { local: { bucket: '/public' } },
-    //   properties: {
-    //     key: 'img',
-    //     // file: 'img',
-    //     // filePath: '/public'
-    //   },
-    //   // validation: {
-    //   //   mimeTypes: ['image/png', 'image/jpg', 'image/jpeg']
-    //   // },
-    // })],
   },
 
 
