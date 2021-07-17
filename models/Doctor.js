@@ -28,40 +28,10 @@ module.exports = model('Doctor', {
     required: true
   },
 
-  createdAt: {
-    type: Number,
-    default: +new Date()
-  },
+  // createdAt: {
+  //   type: Number,
+  //   default: +new Date()
+  // },
 
   uploadedFile: fileSchema
 });
-
-
-
-// const doctorSchema = new Schema({
-//   name: {
-//     type: String,
-//     required: true
-//   },
-
-//   age: {
-//     type: Number,
-//     required: true
-//   },
-
-//   experience: {
-//     type: Number
-//   },
-
-//   description: {
-//     type: String,
-//     required: true
-//   },
-
-//   img: {
-//     type: String,
-//   },
-
-// });
-
-// console.log({...doctorSchema})

@@ -47,7 +47,7 @@ const translations = {
     // successfullyBulkDeleted_plural: 'successfully removed {{count}} records',
     successfullyDeleted: 'Информация успешно удалена',
     successfullyUpdated: 'Информация успешно обновлена',
-    thereWereValidationErrors: 'Ошибка валидации. Проверьте заполненные поля',
+    thereWereValidationErrors: 'Заполните все обязательные поля!',
     // forbiddenError: 'You cannot perform action {{actionName}} on {{resourceId}}',
     // anyForbiddenError: 'You cannot perform given action',
     successfullyCreated: 'Новая запись успешно создана',
