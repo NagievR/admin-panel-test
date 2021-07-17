@@ -15,7 +15,9 @@ const navContentAdmin = {
 };
 
 const uploadProvider = new UploadProvider('images', 'public/images');
-
+const validation = {
+  mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+}
 const resources = [
   {
     resource: Doctor, 
@@ -32,7 +34,8 @@ const resources = [
     },
 
     features: [
-      uploadFeature({ provider: uploadProvider, 
+      uploadFeature({ 
+        provider: uploadProvider, 
         properties: {
           key: 'uploadedFile.path',
           bucket: 'uploadedFile.folder',
@@ -40,7 +43,8 @@ const resources = [
           size: 'uploadedFile.size',
           filename: 'uploadedFile.filename',
           file: 'Фото',
-        }
+        },
+        validation: validation
       })
     ]
   },
