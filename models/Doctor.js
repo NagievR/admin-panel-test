@@ -28,6 +28,11 @@ module.exports = model('Doctor', {
     required: true
   },
 
+  createdAt: {
+    type: Number,
+    default: +new Date()
+  },
+
   uploadedFile: fileSchema
 });
 
