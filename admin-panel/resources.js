@@ -49,7 +49,6 @@ const resources = [
     ]
   },
 
-
   {
     resource: Test, 
     options: { navigation: navContentTest },

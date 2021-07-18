@@ -13,8 +13,6 @@ const adminBro = new AdminBro({
   locale: locale,
   branding: branding,
 });
-
-// console.log(adminBro);
  
 const router = AdminBroExpress.buildRouter(adminBro);
 module.exports = router;

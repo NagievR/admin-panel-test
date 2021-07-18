@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
  
 
-// app.use('/public', express.static(path.join('public', 'images')));
+// static
 app.use(express.static(__dirname + '/public/images'));
 
 // admin panel
