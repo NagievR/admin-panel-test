@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); // RENAME
 const router = express.Router();
 const adminsSchema = require('../models/Admin');
 

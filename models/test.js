@@ -8,7 +8,6 @@ const testSchema = new Schema({
 
   pass: {
     type: String,
-    required: true
   },
 
   age: {

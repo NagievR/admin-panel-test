@@ -1,8 +1,12 @@
-const Test = require('../models/test');
-const Doctor = require('../models/Doctor');
-const Admin = require('../models/Admin');
 const UploadProvider = require('../utils/UploadProvider');
 const uploadFeature = require('@admin-bro/upload');
+const bcrypt = require('bcrypt');
+
+// models. i need to move them to separate files later
+const Test = require('../models/test');
+const Doctor = require('../models/Doctor');
+const Admin = require('../models/Admin'); // rename then 
+const User = require('../models/User');
 
 const navContentTest = {
   name: 'Тест',
@@ -13,6 +17,13 @@ const navContentDoctor = {
 const navContentAdmin = { 
   name: 'Администрация',
 };
+const navContentUser = {};
+
+
+// ===/
+
+// ===
+
 
 const uploadProvider = new UploadProvider('images', 'public/images');
 const validation = {
@@ -32,7 +43,6 @@ const resources = [
         }
       }
     },
-
     features: [
       uploadFeature({ 
         provider: uploadProvider, 
@@ -58,6 +68,39 @@ const resources = [
     resource: Admin, 
     options: { navigation: navContentAdmin },
   },
+
+  {
+    resource: User,
+    options: {      
+      navigation: navContentUser,
+      properties: {
+        '_id': {
+          isVisible: false,
+        },
+        'hashed password': {},
+        'password': {
+          type: 'string',
+          isVisible: {
+            list: false, edit: true, filter: false, show: false,
+          },
+        },
+      },
+      actions: {
+        new: {
+          before: async(req) => {
+            if (req.payload.password) {
+              req.payload = {
+                ...req.payload,
+                passHashed: await bcrypt.hash(req.payload.password, 8),
+                password: null
+              };
+            }
+            return req;
+          },
+        },
+      }
+    }
+  }
   
 ];
 
