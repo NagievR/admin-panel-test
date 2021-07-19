@@ -16,25 +16,27 @@ const adminBro = new AdminBro({
   branding: branding,
 });
 
-const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
-  cookieName: process.env.ADMIN_COOKIE_NAME || 'admin-bro',
-  cookiePassword: process.env.ADMIN_COOKIE_PASS || 'supersecret-and-long-password-for-a-cookie-in-the-browser',
 
-  authenticate: async(email, password) => {
-    try {
-      const user = await User.findOne({ email });
-      if (user) {
-        const matched = await bcrypt.compare(password, user.passHashed);
-        if (matched) {
-          return user;
-        }
-      } else {
-        throw Error('No such user');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-});
+// ========= AUTH ROUTER
+// const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
+//   cookieName: process.env.ADMIN_COOKIE_NAME || 'admin-bro',
+//   cookiePassword: process.env.ADMIN_COOKIE_PASS || 'supersecret-and-long-password-for-a-cookie-in-the-browser',
+
+//   authenticate: async(email, password) => {
+//       const user = await User.findOne({ email });
+//       if (user) {
+//         const matched = await bcrypt.compare(password, user.passHashed);
+//         if (matched) {
+//           return user;
+//         }
+//       }
+//   }
+// });
+
+// module.exports = router;
+// ========= /AUTH ROUTER
+
+
+const router = AdminBroExpress.buildRouter(adminBro);
 
 module.exports = router;

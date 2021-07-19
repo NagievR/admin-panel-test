@@ -27,7 +27,13 @@ const testSchema = new Schema({
       bar: 'test',
       test: ['arr', 1, 2, 4]
     }
+  },
+
+  viewed: {
+    type: Boolean,
+    default: false,
   }
+
 });
 
 module.exports = model('Test', testSchema);

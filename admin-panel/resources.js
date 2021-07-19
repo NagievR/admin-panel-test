@@ -19,12 +19,6 @@ const navContentAdmin = {
 };
 const navContentUser = {};
 
-
-// ===/
-
-// ===
-
-
 const uploadProvider = new UploadProvider('images', 'public/images');
 const validation = {
   mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
@@ -61,7 +55,32 @@ const resources = [
 
   {
     resource: Test, 
-    options: { navigation: navContentTest },
+    options: { 
+      navigation: navContentTest,
+      actions: {
+        show: {
+          before: async(originalResponse) => {
+            try {
+              const prevDoc = await Test.find({});
+              await Test.findOneAndUpdate(prevDoc, { viewed: true });
+            } catch(err) {
+              console.log(err);
+            } finally {
+              return originalResponse;
+            }
+          }
+        },
+        delete: {
+          isAccessible: false,
+        },
+        edit: {
+          isAccessible: false,
+        },
+        new: {
+          isAccessible: false,
+        }
+      },
+    },
   },
   
   {
