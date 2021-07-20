@@ -1,14 +1,14 @@
 
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
+// const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const startDB = require('./database/mongo-db');
 const adminPanelRouter = require('./admin-panel/index');
 const doctorsRouter = require('./routes/doctors.route');
-const testsRouter = require('./routes/tests.route');
+const feedbackRouter = require('./routes/feedback.route');
 const adminsRouter = require('./routes/admins.route');
 const indexRouter = require('./routes/index');
 const fooRouter = require('./routes/foo.route');
@@ -16,7 +16,7 @@ const barRouter = require('./routes/bar.route');
 
 const app = express();
 
-// ******** REMOVE IT LATER. !KOSTIL
+// ******** REMOVE IT LATER. 
   // const bcrypt = require('bcrypt');
   // const User = require('./models/User');
   // const x = async() => {
@@ -25,36 +25,34 @@ const app = express();
   //   user.save();
   // }
   // x()
-// ******** /REMOVE IT LATER. !KOSTIL
+// ******** /REMOVE IT LATER. 
 
 
 // admin panel routes
 app.use('/admin', adminPanelRouter);
 
-// routes
-app.use('/doctors', doctorsRouter);
-app.use('/tests', testsRouter);
-app.use('/admins', adminsRouter);
-app.use('/', indexRouter);
-app.use('/foo', fooRouter);
-app.use('/bar', barRouter);
-
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-
-
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 // static
 app.use(express.static(__dirname + '/public/images'));
 
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// routes
+app.use('/doctors', doctorsRouter);
+app.use('/feedback', feedbackRouter);
+app.use('/admins', adminsRouter);
+app.use('/', indexRouter);
+app.use('/foo', fooRouter);
+app.use('/bar', barRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

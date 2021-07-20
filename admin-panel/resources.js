@@ -1,14 +1,15 @@
 const UploadProvider = require('../utils/UploadProvider');
 const uploadFeature = require('@admin-bro/upload');
 const bcrypt = require('bcrypt');
+const AdminBro = require('admin-bro');
 
 // models. i need to move them to separate files later
-const Test = require('../models/test');
+const Feedback = require('../models/Feedback');
 const Doctor = require('../models/Doctor');
 const Admin = require('../models/Admin'); // rename then 
 const User = require('../models/User');
 
-const navContentTest = {
+const navContentFeedback = {
   name: 'Тест',
 };
 const navContentDoctor = {
@@ -24,6 +25,9 @@ const validation = {
   mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
 }
 const resources = [
+  // Remove it to separate files later
+
+  // **************************** DOCTOR **************************** 
   {
     resource: Doctor, 
     options: { 
@@ -52,17 +56,40 @@ const resources = [
       })
     ]
   },
+  // **************************** /doctor **************************** 
 
+  // **************************** FEEDBACK **************************** 
   {
-    resource: Test, 
+    resource: Feedback, 
     options: { 
-      navigation: navContentTest,
+      navigation: navContentFeedback,
+      properties: {
+        _id: {
+          isVisible: false
+        },
+        date: {
+          type: 'datetime',
+          isTitle: true,
+          options: {},
+          // components: {
+          //   list: AdminBro.bundle('./test-comp'),
+          // },
+        }
+      },
       actions: {
         show: {
-          before: async(originalResponse) => {
+          before: async(originalResponse, request) => {
             try {
-              const prevDoc = await Test.find({});
-              await Test.findOneAndUpdate(prevDoc, { viewed: true });
+              const toFind = { _id: request.record.params._id };
+
+              await Feedback.findOneAndUpdate(
+                toFind, { viewed: true }, (err, doc) => {
+                  if (err) {
+                    throw Error(err);
+                  };
+                  console.log('Updated')
+              });
+
             } catch(err) {
               console.log(err);
             } finally {
@@ -78,16 +105,14 @@ const resources = [
         },
         new: {
           isAccessible: false,
-        }
+        },
       },
     },
   },
-  
-  {
-    resource: Admin, 
-    options: { navigation: navContentAdmin },
-  },
+  // **************************** /feedback **************************** 
 
+
+  // **************************** USER **************************** 
   {
     resource: User,
     options: {      
@@ -119,7 +144,16 @@ const resources = [
         },
       }
     }
-  }
+  },
+  // **************************** /user **************************** 
+
+    
+  // **************************** ADMIN **************************** 
+  {
+    resource: Admin, 
+    options: { navigation: navContentAdmin },
+  },
+  // **************************** /admin **************************** 
   
 ];
 
